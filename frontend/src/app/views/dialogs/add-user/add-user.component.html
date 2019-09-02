@@ -1,0 +1,31 @@
+<div mat-dialog-title>
+  Create new {{data?.convType === 'CONV_GROUP' ? 'group' : data?.convType === 'CONV_CHNNL' ? 'channel' : 'direct'}}
+</div>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="convForm" style="width: 100%">
+        <mat-form-field style="width: 100%">
+          <mat-label>Add users</mat-label>
+          <mat-select formControlName="participants" multiple>
+            <mat-option *ngFor="let user of users" [value]="{fullName: user?.firstName + ' ' + user?.lastName, id: user.id}">
+              <div style="display: flex;flex-direction: row;align-items: center;">
+                <ngx-avatar [name]="user.firstName + ' ' + user.lastName"
+                            fgColor="white"
+                            bgColor="#2c3e50"
+                            [size]="30"></ngx-avatar>
+                <span style="margin-left: 15px">{{user?.firstName}} {{user?.lastName}}</span>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="width: 100%">
+          <input matInput formControlName="conversationName" placeholder="ConversationName">
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="create()" [disabled]="convForm.invalid">Add</button>
+</div>
