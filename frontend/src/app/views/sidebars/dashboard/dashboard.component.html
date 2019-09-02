@@ -1,0 +1,69 @@
+<div class="fluid-container dashboard">
+  <br>
+  <div class="row user">
+    <div class="col" style="display: flex;flex-direction: row;align-items: center">
+      <ngx-avatar [name]="user?.firstName + ' ' + user?.lastName"
+                  [src]="user?.avatarSrc"
+                  bgColor="#FFFFFF"
+                  fgColor="#2C3E50"
+                  [size]="40"></ngx-avatar>
+      <span style="margin-left: 10px">{{user?.firstName}} {{user?.lastName}}</span>
+    </div>
+    <div class="col" style="max-width: fit-content">
+      <button mat-icon-button [matMenuTriggerFor]="settings">
+        <mat-icon>settings_applications</mat-icon>
+      </button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col headers">Channels</div>
+    <div class="col" style="max-width: fit-content">
+      <button mat-icon-button matTooltip="Add new Channel" (click)="addCGDConversation('CONV_CHNNL')">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row data-row" *ngFor="let channel of channels">
+    <div class="col"># {{channel?.conversationName}}</div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col headers">Groups</div>
+    <div class="col" style="max-width: fit-content">
+      <button mat-icon-button matTooltip="Add new Group" (click)="addCGDConversation('CONV_GROUP')">
+        <mat-icon>add_box</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="row data-row" *ngFor="let group of groups">
+    <div class="col">{{group?.conversationName}}</div>
+    <div class="col group-avatars">
+      <ngx-avatar *ngFor="let participant of group?.participants;let p = index"
+                  [ngClass]="{'avatar-margin': p !== 0}"
+                  [name]="participant?.fullName"
+                  fgColor="#ffffff"
+                  bgColor="#2c3e50"
+                  [size]="26"></ngx-avatar>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col headers">Directs</div>
+  </div>
+  <div class="row data-row" *ngFor="let user of users">
+    <div class="col" style="display: flex;flex-direction: row;align-items: center">
+      <ngx-avatar [name]="user?.firstName + ' ' + user?.lastName"
+                  [src]="user?.avatarSrc"
+                  fgColor="#2c3e50"
+                  bgColor="#ffffff"
+                  [size]="26"></ngx-avatar>
+      <span style="margin-left: 15px">{{user?.firstName}} {{user?.lastName}}</span>
+    </div>
+  </div>
+</div>
+<mat-menu #settings="matMenu">
+  <button mat-menu-item>Manage Profile</button>
+  <button mat-menu-item>Notifications</button>
+  <button mat-menu-item (click)="signOut()">Log out</button>
+</mat-menu>
